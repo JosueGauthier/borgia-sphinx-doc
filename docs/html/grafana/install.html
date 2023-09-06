@@ -1,0 +1,822 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Grafana monitoring &#8212; Borgia V2 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=f5b3c8be" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script src="../_static/documentation_options.js?v=bd9c5055"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'grafana/install';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Contributor Guide" href="../contrib_guide.html" />
+    <link rel="prev" title="Production setup" href="../install/install_prod.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logoImageText.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logoImageText.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../user_guide.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../developer_guide.html">
+                        Developer Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../contrib_guide.html">
+                        Contributor Guide
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/JosueGauthier/borgia-serv/tree/sibers" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../user_guide.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../developer_guide.html">
+                        Developer Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../contrib_guide.html">
+                        Contributor Guide
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/JosueGauthier/borgia-serv/tree/sibers" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install/install_dev.html">Development setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_prod.html">Production setup</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Grafana monitoring</a></li>
+
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../developer_guide.html" class="nav-link">Developer Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Grafana monitoring</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="grafana-monitoring">
+<h1>Grafana monitoring<a class="headerlink" href="#grafana-monitoring" title="Link to this heading">#</a></h1>
+<p>A Grafana instance to monitor a django application</p>
+<p>This installation guide allows you to monitor a django application with Prometheus and analyze its logs with Pormtail and Loki.</p>
+<blockquote>
+<div><p>This installation is suitable for any Django application. Notes are added in the case of an installation for the Borgia application</p>
+</div></blockquote>
+<section id="installation-of-libraries">
+<h2>Installation of libraries<a class="headerlink" href="#installation-of-libraries" title="Link to this heading">#</a></h2>
+<p>Inside the virtual environment running your Django application do an installation of the requirements.txt file.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+</section>
+<section id="django-application-log-system">
+<h2>Django application log system<a class="headerlink" href="#django-application-log-system" title="Link to this heading">#</a></h2>
+<p>Copy the log folder to the folder containing your entire application</p>
+<blockquote>
+<div><p>Borgia : copy it under: /borgia-app/Borgia/borgia</p>
+</div></blockquote>
+<p>In the settings.py file of your Django application, copy the following lines:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">log.logger</span> <span class="kn">import</span> <span class="n">CustomisedJSONFormatter</span>
+
+<span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;disable_existing_loggers&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;formatters&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;simple&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2">] </span><span class="si">%(levelname)s</span><span class="s2">|</span><span class="si">%(name)s</span><span class="s2">|</span><span class="si">%(module)s</span><span class="s2">|</span><span class="si">%(funcName)s</span><span class="s2">|</span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;datefmt&quot;</span><span class="p">:</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;json&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;()&quot;</span><span class="p">:</span> <span class="n">CustomisedJSONFormatter</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;handlers&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;applogfile&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;logging.handlers.RotatingFileHandler&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;PATH_TO_YOUR_APP_LOG_FILE/app.log&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;maxBytes&quot;</span><span class="p">:</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">15</span><span class="p">,</span>  <span class="c1"># 15MB</span>
+            <span class="s2">&quot;backupCount&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s2">&quot;formatter&quot;</span><span class="p">:</span> <span class="s2">&quot;json&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;console&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;logging.StreamHandler&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;formatter&quot;</span><span class="p">:</span> <span class="s2">&quot;simple&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;root&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;handlers&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;applogfile&quot;</span><span class="p">,</span> <span class="s2">&quot;console&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+</pre></div>
+</div>
+<p>At the line: “filename”: “PATH_TO_YOUR_APP_LOG_FILE/app.log” replace the PATH_TO_YOUR_APP_LOG_FILE with the path to your app.log file.</p>
+<blockquote>
+<div><p>Borgia : /borgia-app/Borgia/borgia/log/app.log</p>
+</div></blockquote>
+<p>Also be careful to include the logger.py file.</p>
+<p>Once all these actions have been carried out, you can check that your Django application writes its logs in the desired format and in the app.log file.</p>
+<p>To write a log from a your django app :</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;This is a debug log&quot;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;This is a critical log&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="install-grafana">
+<h2>Install Grafana<a class="headerlink" href="#install-grafana" title="Link to this heading">#</a></h2>
+<p>To install Grafana, several options are available to you, an installation bare-metal directly on the OS, via Docker or via a Docker compose file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">grafana</span> <span class="o">-</span><span class="n">p</span> <span class="mi">3000</span><span class="p">:</span><span class="mi">3000</span> <span class="n">grafana</span><span class="o">/</span><span class="n">grafana</span>
+</pre></div>
+</div>
+<p>This command allows you to install grafana in a docker.</p>
+<p>Once the container is launched, a grafana server must be available at http://localhost:3000/</p>
+<blockquote>
+<div><p>Hint : When you establish an SSH connection with the VS Code editor, it is possible with VS Code to use port forwarding:<a class="reference external" href="https://code.visualstudio.com/docs/remote/ssh#_forwarding-a-port-creating-ssh-tunnel">link</a>
+In your case, create a redirection from port 3000 to port 3000 of your machine.</p>
+</div></blockquote>
+<p><img alt="image" src="https://github.com/JosueGauthier/grafana-borgia/assets/20337589/c3ad3042-213f-4099-8ad2-e63ba92736a7" /></p>
+</section>
+<section id="deploy-your-grafana-instance-on-the-web">
+<h2>Deploy your Grafana instance on the web<a class="headerlink" href="#deploy-your-grafana-instance-on-the-web" title="Link to this heading">#</a></h2>
+<p>To access Grafana from the web it is necessary to use a reverse proxy, NGINX is perfect for this.</p>
+<p>Install NGINX:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>nginx
+</pre></div>
+</div>
+<p>Create a configuration file, for example, grafana.conf, in the /etc/nginx/sites-available/ directory with the following content:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server {
+    listen 80;
+    server_name grafana.mysite.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    access_log /var/log/nginx/grafana_access.log;
+    error_log /var/log/nginx/grafana_error.log;
+}
+</pre></div>
+</div>
+<p>Once all this is done create a symlink to /etc/nginx/sites-enabled/</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/etc/nginx/sites-enabled/
+ln<span class="w"> </span>-s<span class="w"> </span>/etc/nginx/sites-available/mon_site<span class="w"> </span>/etc/nginx/sites-enabled/
+</pre></div>
+</div>
+<p>Check the configuration then restart NGINX, your site should be accessible at the address: grafana.mysite.com</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nginx</span> <span class="o">-</span><span class="n">t</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">nginx</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="virtual-machine-use-case-proxmox-vm">
+<h2>Virtual machine use case (Proxmox VM)<a class="headerlink" href="#virtual-machine-use-case-proxmox-vm" title="Link to this heading">#</a></h2>
+<p>If you use a virtual machine manager like Proxmox for example, you will need to use a reverse proxy like haproxy to redirect the incoming connection to the site. In haproxy a backend declaration is necessary in haconfig</p>
+<div class="highlight-cfg notranslate"><div class="highlight"><pre><span></span><span class="na">frontend https</span>
+<span class="w">        </span><span class="na">mode http</span>
+<span class="w">        </span><span class="c1"># ...</span>
+<span class="w">        </span><span class="na">use_backend grafanamysite if { hdr(host) -i grafana.mysite.com }</span>
+
+<span class="c1"># ...</span>
+
+<span class="na">backend grafanamysite</span>
+<span class="w">        </span><span class="na">mode http</span>
+<span class="w">        </span><span class="na">server grafanamysite IPV4_ADRESS_OF_YOUR_VM</span><span class="o">:</span><span class="s">80 check source 10.1.0.8</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="install-loki-and-promtail">
+<h2>Install Loki and Promtail<a class="headerlink" href="#install-loki-and-promtail" title="Link to this heading">#</a></h2>
+<p>Loki is an open source log management system designed to collect, store, and query logs efficiently and scalably.</p>
+<p>Promtail is a log harvesting agent developed by Grafana, designed to extract logs from various sources, enrich them, and ship them to Loki. It facilitates centralized collection and search of logs within a cluster or distributed infrastructure.</p>
+<p>Promtail is the instance that will fetch the logs in your app.log file and send them to a Loki server which will transmit these logs to a Grafana instance.</p>
+<p>For the installation of Loki and Promtail we will use Docker compose.</p>
+<p>For this, use the docker-compose.yaml file available in this repo.</p>
+<p>In your docker-compose.yaml file you must define the following two volume paths: LOCAL_PATH_TO_YOUR_DJANGO_LOG_FOLDER and PATH_TO_PROMTAIL_CFG.</p>
+<p>LOCAL_PATH_TO_YOUR_DJANGO_LOG_FOLDER is the path to your log folder of your django application. PATH_TO_PROMTAIL_CFG is the path to the downloaded promtail-config.yml file.</p>
+<ul class="simple">
+<li><p>LOCAL_PATH_TO_YOUR_DJANGO_LOG_FOLDER/:/log/</p></li>
+<li><p>PATH_TO_PROMTAIL_CFG/promtail-config.yml:/etc/promtail/config.yml</p></li>
+</ul>
+<p>This volume binding allows the promtail docker container to use the promtail-config.yml file as a configuration source. This will create a local copy of the file inside your docker container.</p>
+<p>The binding of log folders allows promtail to access the log folder dynamically and therefore each time the app.log file is modified, allows promtail to read the changes in this file.</p>
+<p>To launch docker compose, go to the folder containing the docker-compose.yaml file and run the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker-compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.yaml<span class="w"> </span>up
+</pre></div>
+</div>
+<p>If you want to run it in daemon mode (in the background) add -d to the end of the command</p>
+<p>If everything goes well when you run the docker ps command, 3 active containers should appear. If nothing is displayed, check if they are not turned off via the docker ps -a command. If one of them is off, there is probably an error, check the logs.</p>
+<p>If you try to access the address http://localhost:3100/, a page with: 404 page not found should be displayed</p>
+</section>
+<section id="add-the-grafana-container-to-the-loki-network">
+<h2>Add the Grafana container to the loki network<a class="headerlink" href="#add-the-grafana-container-to-the-loki-network" title="Link to this heading">#</a></h2>
+<p>In order to simplify the communication between containers the creation of a bridge between the loki container and the grafana container is necessary. To do this, run the command:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>network<span class="w"> </span>connect<span class="w"> </span>lokigrafana_loki<span class="w"> </span>grafana
+</pre></div>
+</div>
+<p>Loki is now visible from the Grafana container. You can test the connection by running the command: <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">exec</span> <span class="pre">-ti</span> <span class="pre">containerID1</span> <span class="pre">ping</span> <span class="pre">containerID2</span></code></p>
+</section>
+<section id="add-loki-to-grafana">
+<h2>Add Loki to Grafana.<a class="headerlink" href="#add-loki-to-grafana" title="Link to this heading">#</a></h2>
+<p>Go to your Grafana server page. In the menu access the datasources page, click on add a new datasource, select Loki. In the URL input insert the url containing your loki instance: http://lokigrafana-loki-1:3100. Click on save.</p>
+<blockquote>
+<div><p>Be careful, an error may occur and say: “Data source connected, but no labels received. Verify that Loki and Promtail is configured properly”
+This can mean several things:</p>
+<ul class="simple">
+<li><p>either your Django server has not recently transmitted any logs to Promatail and therefore no logs are detected, to resolve this type of problem simply have Django generate several logs.</p></li>
+<li><p>either your Promtail instance is poorly configured and sending logs in the wrong format. Check your container logs to verify that everything is going well</p></li>
+</ul>
+</div></blockquote>
+<p><img alt="image" src="https://github.com/JosueGauthier/grafana-borgia/assets/20337589/aa2e0851-3bf3-46e9-bab1-8bb973e81640" /></p>
+<p><img alt="image" src="https://github.com/JosueGauthier/grafana-borgia/assets/20337589/80c3f7f4-b3f7-4a57-886f-593435fdf871" /></p>
+<p>You can now access the Explore page and make queries on your logs:</p>
+<p><img alt="image" src="https://github.com/JosueGauthier/grafana-borgia/assets/20337589/92b1dee6-9c63-44b3-b314-c77d57342871" /></p>
+<p>Here are some simple queries:</p>
+<p>This request allows you to display logs in json format</p>
+<blockquote>
+<div><p>{job=”containerlogs”} | json</p>
+</div></blockquote>
+<p>This query allows you to filter the logs and display only ERROR level logs.</p>
+<blockquote>
+<div><p>{job=”containerlogs”} | json json_level=”level” | json_level = “ERROR”</p>
+</div></blockquote>
+<p>This query allows you to filter by displaying logs coming only from the views.py file</p>
+<blockquote>
+<div><p>{job=”containerlogs”} | json |= “views.py”</p>
+</div></blockquote>
+<p>If you only want to view a single field for example when django’s func_name is = myfunc
+Type the query:</p>
+<blockquote>
+<div><p>{job=”containerlogs”} | json</p>
+</div></blockquote>
+<p>Then go to a field or func_name = myfunc click on the icon + this will automatically create the associated query</p>
+<blockquote>
+<div><p>{job=”containerlogs”} | json | django_funcName=<code class="docutils literal notranslate"><span class="pre">myfunc</span></code></p>
+</div></blockquote>
+<p><img alt="image" src="https://github.com/JosueGauthier/grafana-borgia/assets/20337589/a4e995fe-f5de-449b-a68c-a54f6faea78b" /></p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="prometheus-install">
+<h1>Prometheus install<a class="headerlink" href="#prometheus-install" title="Link to this heading">#</a></h1>
+<p>Like Loki and Promtail, it is possible to install a Prometheus instance in order to monitor the Django application with metrics such as the number of requests per second, response time, latency, etc.</p>
+<section id="install-django-prometheus-package">
+<h2>Install django-prometheus package<a class="headerlink" href="#install-django-prometheus-package" title="Link to this heading">#</a></h2>
+<p>When installing the <code class="docutils literal notranslate"><span class="pre">requirements.py</span></code> file the django-prometheus package was installed <a class="reference external" href="https://github.com/korfuri/django-prometheus">link</a>. To use it, go to the <code class="docutils literal notranslate"><span class="pre">settings.py</span></code> file of your django application.</p>
+<p>and modify the following lines:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>
+<span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+   <span class="o">...</span>
+   <span class="s1">&#39;django_prometheus&#39;</span><span class="p">,</span>
+   <span class="o">...</span>
+<span class="p">]</span>
+
+<span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;django_prometheus.middleware.PrometheusBeforeMiddleware&#39;</span><span class="p">,</span>
+    <span class="c1"># All your other middlewares go here, including the default</span>
+    <span class="c1"># middlewares like SessionMiddleware, CommonMiddleware,</span>
+    <span class="c1"># CsrfViewmiddleware, SecurityMiddleware, etc.</span>
+    <span class="s1">&#39;django_prometheus.middleware.PrometheusAfterMiddleware&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+</pre></div>
+</div>
+<p>in the urls.py file:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="o">...</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s1">&#39;django_prometheus.urls&#39;</span><span class="p">)),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>It is also possible to monitor your database. However in my case I get an error.</p>
+<blockquote>
+<div><p>Link to Github error: <a class="reference external" href="https://github.com/korfuri/django-prometheus/issues/414">link</a></p>
+</div></blockquote>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>
+<span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s1">&#39;django_prometheus.db.backends.sqlite3&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">&#39;db.sqlite3&#39;</span><span class="p">),</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+</pre></div>
+</div>
+<p>Once your django application is correctly configured you can restart your server and go to the url http://your-django-app.com/metrics If everything went correctly you should then observe a list of metrics.</p>
+</section>
+<section id="id1">
+<h2>Prometheus install<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>Prometheus can be installed in different ways, a bare-metal installation or via a Docker container or other.</p>
+<p>If you are not familiar with Docker, a bare-metal installation is preferred, otherwise install it via Docker:</p>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-p</span> <span class="pre">9090:9090</span> <span class="pre">prom/prometheus</span></code></p>
+<p>Example of possible bare-metal configuration is as follows.</p>
+<div class="highlight-cfg notranslate"><div class="highlight"><pre><span></span><span class="na">global</span><span class="o">:</span>
+<span class="w">  </span><span class="na">scrape_interval</span><span class="o">:</span><span class="w"> </span><span class="s">15s</span>
+<span class="w">  </span><span class="na">evaluation_interval</span><span class="o">:</span><span class="w"> </span><span class="s">15s</span>
+<span class="na">scrape_configs</span><span class="o">:</span>
+<span class="w">  </span><span class="na">- job_name</span><span class="o">:</span><span class="w"> </span><span class="s">borgiaMonitor</span>
+<span class="w">    </span><span class="na">static_configs</span><span class="o">:</span>
+<span class="w">      </span><span class="na">- targets</span><span class="o">:</span>
+<span class="w">        </span><span class="na">- localhost</span>
+</pre></div>
+</div>
+<p>For installation via a docker container you can specify –network=”host” to allow the container to access the local network.</p>
+<p>docker run –network=”host” -d -p 9090:9090 prom/prometheus</p>
+<p>You can access the localhost of the machine from the container via the address: 172.17.0.1</p>
+<blockquote>
+<div><p>Precision: I encountered quite a few problems accessing http://your-django-app.com/metrics if the site uses HTTPS. To get around this problem I recommend deploying your django application both on the internet and both on the local network. Simply create a new NGINX configuration file with the following content:</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="p">{</span>
+    <span class="n">listen</span> <span class="mi">80</span><span class="p">;</span>
+    <span class="n">server_name</span> <span class="n">localhost</span><span class="p">;</span>
+    <span class="n">location</span> <span class="o">=</span> <span class="o">/</span><span class="n">favicon</span><span class="o">.</span><span class="n">ico</span> <span class="p">{</span> <span class="n">access_log</span> <span class="n">off</span><span class="p">;</span> <span class="n">log_not_found</span> <span class="n">off</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">location</span> <span class="o">/</span><span class="n">media</span>  <span class="p">{</span>
+        <span class="n">alias</span>  <span class="n">PATH_TO_YOUR_APP</span><span class="o">/</span><span class="n">static</span><span class="o">/</span><span class="n">media</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">location</span> <span class="o">/</span><span class="n">static</span> <span class="p">{</span>
+        <span class="n">alias</span> <span class="n">PATH_TO_YOUR_APP</span><span class="o">/</span><span class="n">static</span><span class="o">/</span><span class="n">static_root</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
+        <span class="n">include</span> <span class="n">proxy_params</span><span class="p">;</span>
+        <span class="n">proxy_pass</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">unix</span><span class="p">:</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">gunicorn</span><span class="o">.</span><span class="n">sock</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</pre></div>
+</div>
+<p>Once your Prometheus server is launched you can see if it responds well by accessing http://localhost:9090/targets
+You can now under your grafana panel add a new data source, select Prometheus. In the URL enter: http://172.17.0.1:9090
+The address 172.17.0.1 provides access to the machine’s local network.</p>
+</section>
+<section id="add-prometheus-data-source-to-grafana">
+<h2>Add Prometheus data source to Grafana<a class="headerlink" href="#add-prometheus-data-source-to-grafana" title="Link to this heading">#</a></h2>
+<p><img alt="image" src="https://github.com/JosueGauthier/grafana-borgia/assets/20337589/1a81eb5a-da01-4d79-8e29-9831bb937285" /></p>
+</section>
+<section id="creation-of-the-django-monitoring-panel">
+<h2>Creation of the Django monitoring panel<a class="headerlink" href="#creation-of-the-django-monitoring-panel" title="Link to this heading">#</a></h2>
+<p>In order to properly visualize the retrieved metrics it is possible to use different dashboards here ready for use:
+<a class="reference external" href="https://grafana.com/grafana/dashboards/17658-django/">link</a></p>
+<p>Simply download it and import it as json into grafana.</p>
+<p><img alt="image" src="https://github.com/JosueGauthier/grafana-borgia/assets/20337589/7c7c6c88-c2cf-4d9c-8058-cfe5031e2a96" /></p>
+<p>Select your data source from prometheus and that’s it.</p>
+<p><img alt="image" src="https://github.com/JosueGauthier/grafana-borgia/assets/20337589/1dd09d39-26b7-42db-8480-e07bb9085f7f" /></p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../install/install_prod.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Production setup</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../contrib_guide.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Contributor Guide</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Grafana monitoring</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-of-libraries">Installation of libraries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#django-application-log-system">Django application log system</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-grafana">Install Grafana</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploy-your-grafana-instance-on-the-web">Deploy your Grafana instance on the web</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#virtual-machine-use-case-proxmox-vm">Virtual machine use case (Proxmox VM)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-loki-and-promtail">Install Loki and Promtail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-grafana-container-to-the-loki-network">Add the Grafana container to the loki network</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-loki-to-grafana">Add Loki to Grafana.</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#prometheus-install">Prometheus install</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-django-prometheus-package">Install django-prometheus package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Prometheus install</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-prometheus-data-source-to-grafana">Add Prometheus data source to Grafana</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creation-of-the-django-monitoring-panel">Creation of the Django monitoring panel</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../_sources/grafana/install.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023, Josué Gauthier.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.5.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
