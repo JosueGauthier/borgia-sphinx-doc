@@ -20,5 +20,12 @@ help:
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 github:
+	@echo Make the html files for Github
 	@make html
-	@cp -a _build/html/. ../docs
+	@echo Make done
+	@echo Cleaning the docs folder excluding .nojekyll hidden file
+	@rm -r docs/*
+	@echo Cleanup done
+	@echo Copy the html folder into the docs folder for Github
+	@cp -a _build/html/. ./docs
+	@echo Copy done
