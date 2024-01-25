@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Development setup &#8212; Borgia V2 documentation</title>
+    <title>Major update fixes &#8212; Borgia V2 documentation</title>
   
   
   
@@ -347,7 +347,7 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Development setup</li>
+    <li class="breadcrumb-item active" aria-current="page">Major update fixes</li>
   </ul>
 </nav>
 </div>
@@ -364,59 +364,192 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="development-setup">
-<h1>Development setup<a class="headerlink" href="#development-setup" title="Link to this heading">#</a></h1>
-<section id="documentation-installation">
-<h2>Documentation - Installation<a class="headerlink" href="#documentation-installation" title="Link to this heading">#</a></h2>
-</section>
+  <section id="major-update-fixes">
+<h1>Major update fixes<a class="headerlink" href="#major-update-fixes" title="Link to this heading">#</a></h1>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
 <blockquote>
-<div><p>This guide allows you to install, configure and operate Borgia locally for <strong>development</strong>.</p>
+<div><p>This part is dedicated to perform a major update of the Borgia app.</p>
 </div></blockquote>
-<p>All of the following is independent of the operating system used. It works on Windows, MacOS and Linux.</p>
-<p>Be careful, if Python 2 and 3 coexist, python 3 will be called with <code class="docutils literal notranslate"><span class="pre">python3</span></code>. In all cases, check that Python 3 is used for the following commands, by doing: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">--version</span></code> or <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">--version</span></code>. Same for <code class="docutils literal notranslate"><span class="pre">pip</span></code> and <code class="docutils literal notranslate"><span class="pre">pip3</span></code> if necessary.</p>
-</section>
-<section id="installing-dependencies">
-<h2>Installing dependencies<a class="headerlink" href="#installing-dependencies" title="Link to this heading">#</a></h2>
+<p>This includes :</p>
 <ul class="simple">
-<li><p>Python packages: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements/dev.txt</span></code></p></li>
-<li><p>Less: <code class="docutils literal notranslate"><span class="pre">yarn</span> <span class="pre">global</span> <span class="pre">add</span> <span class="pre">less</span></code> or <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">-g</span> <span class="pre">less</span></code></p></li>
+<li><p>Django and libs updates</p></li>
+<li><p>Functionnalities addon</p></li>
+<li><p>Template update</p></li>
+<li><p>New Django app</p></li>
+</ul>
+<p>This guide is intended to help you sort out any errors that may occur.</p>
+</section>
+<section id="preparation">
+<h2>Preparation<a class="headerlink" href="#preparation" title="Link to this heading">#</a></h2>
+<p>Before attempting any update, make a backup of your VM, container or any other solution hosting your application.</p>
+</section>
+<section id="update-borgia-while-preserving-the-db">
+<h2>Update Borgia while preserving the DB<a class="headerlink" href="#update-borgia-while-preserving-the-db" title="Link to this heading">#</a></h2>
+<p>If you want to move from one VM to another or start from scratch, you have several options.</p>
+<p>The one I’m going to detail has the advantage of being robust and adaptable to all situations.</p>
+<blockquote>
+<div><p>This installation is based solely on a production setup (link)</p>
+</div></blockquote>
+<section id="on-the-machine-where-the-db-is-located">
+<h3>On the machine where the DB is located<a class="headerlink" href="#on-the-machine-where-the-db-is-located" title="Link to this heading">#</a></h3>
+<blockquote>
+<div><p>Make an SQL dump of the DB
+<code class="docutils literal notranslate"><span class="pre">pg_dump</span> <span class="pre">-h</span> <span class="pre">localhost</span> <span class="pre">-p</span> <span class="pre">5432</span> <span class="pre">-U</span> <span class="pre">mon_utilisateur</span> <span class="pre">-d</span> <span class="pre">ma_base_de_donnees</span> <span class="pre">-f</span> <span class="pre">sauvegarde.sql</span></code></p>
+</div></blockquote>
+<p>On the machine to which you wish to import the DB or update Borgia</p>
+</section>
+<section id="update-the-server">
+<h3>Update the server:<a class="headerlink" href="#update-the-server" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">apt-get</span> <span class="pre">update</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">apt-get</span> <span class="pre">upgrade</span></code></p></li>
 </ul>
 </section>
-<section id="configuring-settings-py">
-<h2>Configuring <code class="docutils literal notranslate"><span class="pre">settings.py</span></code><a class="headerlink" href="#configuring-settings-py" title="Link to this heading">#</a></h2>
+<section id="remove-apache-if-installed">
+<h3>Remove Apache if installed:<a class="headerlink" href="#remove-apache-if-installed" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Copy/paste the <code class="docutils literal notranslate"><span class="pre">settings.py</span></code> file located in <code class="docutils literal notranslate"><span class="pre">/contrib/development</span></code> into <code class="docutils literal notranslate"><span class="pre">/borgia/borgia</span></code></p></li>
-<li><p>Optional : Modify all the variables that must be done by browsing the file.</p></li>
-<li><p>Optional : In the case of configuring a Gmail email, with email <code class="docutils literal notranslate"><span class="pre">GMAIL_EMAIL</span></code> and password <code class="docutils literal notranslate"><span class="pre">GMAIL_PASSWORD</span></code>, use:</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">apt-get</span> <span class="pre">purge</span> <span class="pre">apache2</span></code></p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DEFAULT_FROM_EMAIL</span> <span class="o">=</span> <span class="s1">&#39;GMAIL_EMAIL&#39;</span>
-<span class="n">SERVER_EMAIL</span> <span class="o">=</span> <span class="s1">&#39;GMAIL_EMAIL&#39;</span>
-<span class="n">EMAIL_HOST</span> <span class="o">=</span> <span class="s1">&#39;smtp.gmail.com&#39;</span>
-<span class="n">EMAIL_PORT</span> <span class="o">=</span> <span class="mi">587</span>
-<span class="n">EMAIL_HOST_USER</span> <span class="o">=</span> <span class="s1">&#39;GMAIL_EMAIL&#39;</span>
-<span class="n">EMAIL_HOST_PASSWORD</span> <span class="o">=</span> <span class="s1">&#39;GMAIL_PASSWORD&#39;</span>
-<span class="n">EMAIL_BACKEND</span> <span class="o">=</span> <span class="s1">&#39;django.core.mail.backends.smtp.EmailBackend&#39;</span>
+</section>
+<section id="install-necessary-packages-for-the-rest-of-the-installation">
+<h3>Install necessary packages for the rest of the installation:<a class="headerlink" href="#install-necessary-packages-for-the-rest-of-the-installation" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">curl</span> <span class="pre">apt-transport-https</span></code></p></li>
+</ul>
+</section>
+<section id="install-all-necessary-packages">
+<h3>Install all necessary packages:<a class="headerlink" href="#install-all-necessary-packages" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">build-essential</span> <span class="pre">libssl-dev</span> <span class="pre">libffi-dev</span> <span class="pre">libjpeg-dev</span> <span class="pre">python-venv</span> <span class="pre">python-dev</span> <span class="pre">libpq-dev</span> <span class="pre">postgresql</span> <span class="pre">postgresql-contrib</span> <span class="pre">nginx</span> <span class="pre">curl</span> <span class="pre">git</span></code></p></li>
+</ul>
+</section>
+<section id="creating-the-postgresql-database-and-user">
+<h3>Creating the PostgreSQL Database and User<a class="headerlink" href="#creating-the-postgresql-database-and-user" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">-u</span> <span class="pre">postgres</span> <span class="pre">psql</span></code></p></li>
+</ul>
+<p>Inside the <code class="docutils literal notranslate"><span class="pre">postgres=#</span></code> terminal :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">borgia</span><span class="p">;</span>
+<span class="n">CREATE</span> <span class="n">USER</span> <span class="n">borgiauser</span> <span class="n">WITH</span> <span class="n">PASSWORD</span> <span class="s1">&#39;password&#39;</span><span class="p">;</span>
+<span class="n">ALTER</span> <span class="n">ROLE</span> <span class="n">borgiauser</span> <span class="n">SET</span> <span class="n">client_encoding</span> <span class="n">TO</span> <span class="s1">&#39;utf8&#39;</span><span class="p">;</span>
+<span class="n">ALTER</span> <span class="n">ROLE</span> <span class="n">borgiauser</span> <span class="n">SET</span> <span class="n">default_transaction_isolation</span> <span class="n">TO</span> <span class="s1">&#39;read committed&#39;</span><span class="p">;</span>
+<span class="n">ALTER</span> <span class="n">ROLE</span> <span class="n">borgiauser</span> <span class="n">SET</span> <span class="n">timezone</span> <span class="n">TO</span> <span class="s1">&#39;UTC&#39;</span><span class="p">;</span>
+<span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="n">DATABASE</span> <span class="n">borgia</span> <span class="n">TO</span> <span class="n">borgiauser</span><span class="p">;</span>
+\<span class="n">q</span>
+
 </pre></div>
 </div>
+</section>
+<section id="import-the-db">
+<h3>Import the DB<a class="headerlink" href="#import-the-db" title="Link to this heading">#</a></h3>
+<p>In the empty DB, import the backup dump :</p>
+<p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">-u</span> <span class="pre">postgres</span> <span class="pre">psql</span> <span class="pre">borgia</span> <span class="pre">&lt;</span> <span class="pre">/home/josue/Downloads/backup_P3.sql</span></code></p>
+</section>
+<section id="installation-of-yarn">
+<h3>Installation of Yarn<a class="headerlink" href="#installation-of-yarn" title="Link to this heading">#</a></h3>
+<p>See (link)</p>
+</section>
+<section id="create-the-borgia-root-folder">
+<h3>Create the Borgia root folder:<a class="headerlink" href="#create-the-borgia-root-folder" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Optional: Don’t forget to configure Gmail to accept “less secure applications”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">/borgia-app</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/borgia-app</span></code></p></li>
 </ul>
 </section>
-<section id="migrations-and-initial-data">
-<h2>Migrations and initial data<a class="headerlink" href="#migrations-and-initial-data" title="Link to this heading">#</a></h2>
-<p>The following commands must be executed in the <code class="docutils literal notranslate"><span class="pre">/borgia</span></code> application folder.</p>
+</section>
+<section id="copy-of-borgia">
+<h2>Copy of Borgia<a class="headerlink" href="#copy-of-borgia" title="Link to this heading">#</a></h2>
+<p>In <code class="docutils literal notranslate"><span class="pre">/borgia-app</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/borgia-app/Borgia.git</span></code></p></li>
+</ul>
+<p>Then in <code class="docutils literal notranslate"><span class="pre">/borgia-app/Borgia</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">tags/RELEASE_TO_UTILISER</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">production_RELEASE_TO_USE</span></code></p></li>
+</ul>
+<section id="creating-a-python-virtual-environment-for-your-project">
+<h3>Creating a Python Virtual Environment for your Project<a class="headerlink" href="#creating-a-python-virtual-environment-for-your-project" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">venv</span> <span class="pre">venv</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">venv/bin/activate</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="installation-of-packages-necessary-for-the-application">
+<h2>Installation of packages necessary for the application<a class="headerlink" href="#installation-of-packages-necessary-for-the-application" title="Link to this heading">#</a></h2>
+<p>In <code class="docutils literal notranslate"><span class="pre">/borgia-app/Borgia</span></code> and in the virtual environment install the <code class="docutils literal notranslate"><span class="pre">prod.txt</span></code> requirement file.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements/prod.txt</span></code></p></li>
+</ul>
+<p>And finally, outside the virtual environment:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">yarn</span> <span class="pre">global</span> <span class="pre">add</span> <span class="pre">less</span></code></p></li>
+</ul>
+<blockquote>
+<div><p>If error  <code class="docutils literal notranslate"><span class="pre">lessc</span></code> : <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">-g</span> <span class="pre">less</span></code></p>
+</div></blockquote>
+</section>
+<section id="software-configuration">
+<h2>Software configuration<a class="headerlink" href="#software-configuration" title="Link to this heading">#</a></h2>
+<p>See (link)</p>
+</section>
+<section id="database-migration">
+<h2>Database migration<a class="headerlink" href="#database-migration" title="Link to this heading">#</a></h2>
+<p>This is where your problems are likely to start.</p>
+<p>Here’s the kind of error you may encounter:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>borgiaenv<span class="o">)</span><span class="w"> </span>root@borgia-p3:/borgia-app/Borgia/borgia#<span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>makemigrations<span class="w"> </span>modules
+
+...
+
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;/borgia-app/borgiaenv/lib/python.9/site-packages/django/db/models/options.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">224</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>contribute_to_class
+<span class="w">    </span>raise<span class="w"> </span>TypeError<span class="o">(</span>
+TypeError:<span class="w"> </span><span class="s1">&#39;class Meta&#39;</span><span class="w"> </span>got<span class="w"> </span>invalid<span class="w"> </span>attribute<span class="o">(</span>s<span class="o">)</span>:<span class="w"> </span>ask_password
+...
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>...
+django.db.migrations.exceptions.InconsistentMigrationHistory:<span class="w"> </span>Migration<span class="w"> </span>users.0001_initial<span class="w"> </span>is<span class="w"> </span>applied<span class="w"> </span>before<span class="w"> </span>its<span class="w"> </span>dependency<span class="w"> </span>auth.0012_alter_user_first_name_max_length<span class="w"> </span>on<span class="w"> </span>database<span class="w"> </span><span class="s1">&#39;default&#39;</span>.
+</pre></div>
+</div>
+<p>First of all, try a classic migration:</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">/borgia-app/Borgia/borgia</span></code> and in the virtual environment:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">makemigrations</span> <span class="pre">configurations</span> <span class="pre">users</span> <span class="pre">shops</span> <span class="pre">finances</span> <span class="pre">events</span> <span class="pre">modules</span> <span class="pre">sales</span> <span class="pre">stocks</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">migrate</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">loaddata</span> <span class="pre">initial</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">collectstatic</span> <span class="pre">--clear</span></code> indicating “yes” on validation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">collectstatic</span> <span class="pre">--clear</span></code> by accepting the alert</p></li>
 </ul>
-<p>Initial data for simulation and development.</p>
+<p>If you get an error, it means that a link has been broken between your DB and your Django. You’ll need to repair it.</p>
+<p>Firstly, in the <code class="docutils literal notranslate"><span class="pre">/borgia-app/Borgia/borgia</span></code> delete all the current migrations files :</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>find<span class="w"> </span>.<span class="w"> </span>-path<span class="w"> </span><span class="s2">&quot;*/migrations/*.py&quot;</span><span class="w"> </span>-not<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;__init__.py&quot;</span><span class="w"> </span>-delete
+find<span class="w"> </span>.<span class="w"> </span>-path<span class="w"> </span><span class="s2">&quot;*/migrations/*.pyc&quot;</span><span class="w">  </span>-delete
+</pre></div>
+</div>
+<p>Then inside the PostgreSQL database you will delete the Django migrations too.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>manage.py<span class="w"> </span>dbshell
+
+<span class="nv">borgia</span><span class="o">=</span>&gt;<span class="w"> </span>DELETE<span class="w"> </span>FROM<span class="w"> </span>django_migrations<span class="p">;</span>
+</pre></div>
+</div>
+<p>Then you will retry to build the migrations :
+In <code class="docutils literal notranslate"><span class="pre">/borgia-app/Borgia/borgia</span></code> and in the virtual environment:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">loaddata</span> <span class="pre">tests_data</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">makemigrations</span> <span class="pre">configurations</span> <span class="pre">users</span> <span class="pre">shops</span> <span class="pre">finances</span> <span class="pre">events</span> <span class="pre">modules</span> <span class="pre">sales</span> <span class="pre">stocks</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">migrate</span></code></p></li>
 </ul>
+<p>If you still get an error you need to fake at least initial migrations <a class="reference external" href="https://docs.djangoproject.com/fr/5.0/topics/migrations/#initial-migrations">Django fake migrations</a>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">migrate</span> <span class="pre">--fake-initial</span></code></p></li>
+</ul>
+<p>If after this you still get an error fake the corresponding app with the <code class="docutils literal notranslate"><span class="pre">--fake</span></code> attribute. For example here if you get an error with the <code class="docutils literal notranslate"><span class="pre">contenttypes</span></code> app do :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">migrate</span> <span class="pre">contenttypes</span> <span class="pre">--fake</span></code></p></li>
+</ul>
+<blockquote>
+<div><p>Be careful with this command beacause after that you will need to redo the migrations from scratch.</p>
+</div></blockquote>
+<p>Then, enter the password for the administrator account (which will be deactivated later):</p>
 <p>Changing the password of the first user <code class="docutils literal notranslate"><span class="pre">AE_ENSAM</span></code>:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">shell</span></code></p></li>
@@ -426,22 +559,97 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">u.save()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">exit()</span></code></p></li>
 </ul>
-</section>
-<section id="run-local-server">
-<h2>Run local server<a class="headerlink" href="#run-local-server" title="Link to this heading">#</a></h2>
-<p>You can then launch a local development server:</p>
+<p>After all these commands you will be able to run a server :</p>
+<section id="ufw-configuration">
+<h3>UFW configuration<a class="headerlink" href="#ufw-configuration" title="Link to this heading">#</a></h3>
+<p>If you followed the initial server setup guide, you should have a UFW firewall protecting your server. In order to test the development server, you need to allow access to the port you’ll be using.</p>
+<p>Create exception for port 8000 :</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">runserver</span></code></p></li>
-</ul>
-<p>To launch it on a specific port address use:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">runserver</span> <span class="pre">localhost:8081</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">ufw</span> <span class="pre">allow</span> <span class="pre">8000</span></code></p></li>
 </ul>
 </section>
-<section id="tests">
-<h2>Tests<a class="headerlink" href="#tests" title="Link to this heading">#</a></h2>
-<p>Unit tests are run by <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">test</span></code> or <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">test</span> <span class="pre">APPLICATION_NAME</span></code> to test a particular application.</p>
-<p>They must be executed, without errors before each push.</p>
+<section id="run-the-server">
+<h3>Run the server<a class="headerlink" href="#run-the-server" title="Link to this heading">#</a></h3>
+<p>The command in the virtual environment <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">manage.py</span> <span class="pre">runserver</span> <span class="pre">0.0.0.0:8000</span></code> should start the server and should not report any errors. If this is the case, continue to the rest and end of the installation guide.</p>
+<p>In your web browser, visit your server’s domain name or IP address followed by port 8000 : http://server_domain_or_IP:8000</p>
+<p>If everythings go well you can normally continue the installation.
+Else if you get an error like :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">django</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">ProgrammingError</span><span class="p">:</span> <span class="n">column</span> <span class="n">shops_shop</span><span class="o">.</span><span class="n">correcting_factor_activated</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">exist</span>
+<span class="n">LINE</span> <span class="mi">1</span><span class="p">:</span> <span class="o">...</span><span class="s2">&quot;shops_shop&quot;</span><span class="o">.</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;shops_shop&quot;</span><span class="o">.</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;shops_sho...</span>
+
+</pre></div>
+</div>
+<p>It means that due to fake migrations the corresponding fields does not exist in the DB so you need to make a fix migration by hand.</p>
+<p>To do this indificate the corresponding fields that have a problem, in the given example it is : <code class="docutils literal notranslate"><span class="pre">correcting_factor_activated</span></code> from <code class="docutils literal notranslate"><span class="pre">shops</span></code> app.</p>
+<p>So in the shops migration folder, go to the file that create the <code class="docutils literal notranslate"><span class="pre">correcting_factor_activated</span></code> field and remove it.</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># Generated by Django 4.0.4 on 2024-01-22 21:08</span>
+
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">import</span> <span class="nn">django.core.validators</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">migrations</span><span class="p">,</span> <span class="n">models</span>
+<span class="kn">import</span> <span class="nn">django.db.models.deletion</span>
+
+
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+
+    <span class="n">initial</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">]</span>
+
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">CreateModel</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Shop&#39;</span><span class="p">,</span>
+            <span class="n">fields</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">auto_created</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">serialize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">)),</span>
+                <span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">django</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">validators</span><span class="o">.</span><span class="n">RegexValidator</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s1">&#39;Ne doit contenir que des lettres</span><span class="se">\n</span><span class="s1">                                minuscules, sans espace ni caractère</span><span class="se">\n</span><span class="s1">                                spécial.&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="s1">&#39;^[a-z]+$&#39;</span><span class="p">)],</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Code&#39;</span><span class="p">)),</span>
+                <span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Description&#39;</span><span class="p">)),</span>
+                <span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">django</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">validators</span><span class="o">.</span><span class="n">RegexValidator</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s1">&#39;Doit être dans le format #F4FA58&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="s1">&#39;^#[A-Za-z0-9]</span><span class="si">{6}</span><span class="s1">&#39;</span><span class="p">)],</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Couleur&#39;</span><span class="p">)),</span>
+                <span class="c1">#(&#39;correcting_factor_activated&#39;, models.BooleanField(default=True, verbose_name=&#39;Activation du facteur de correction&#39;)),</span>
+            <span class="p">],</span>
+        <span class="p">),</span>
+
+
+<span class="o">...</span>
+
+</pre></div>
+</div>
+<p>Then create a new file inside the migration folder like <code class="docutils literal notranslate"><span class="pre">0002_FIX_correcting_factor_activated.py</span></code> and inside put the following content :</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>
+
+
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">migrations</span><span class="p">,</span> <span class="n">models</span>
+
+
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+
+
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;shops&#39;</span><span class="p">,</span> <span class="s1">&#39;0001_initial&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">AddField</span><span class="p">(</span>  
+            <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;Shop&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;correcting_factor_activated&#39;</span><span class="p">,</span>
+            <span class="n">field</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Activation du facteur de correction&#39;</span><span class="p">),</span>
+        <span class="p">),</span>
+       
+    <span class="p">]</span>
+
+
+</pre></div>
+</div>
+<p>What it does ? It does basically add a field inside the Shop model.</p>
+<p>After that do again :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">makemigrations</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">migrate</span></code></p></li>
+</ul>
+<p>And repeat for each missing field.</p>
+<p>After that, you should be able to run a Django server.</p>
+</section>
 </section>
 </section>
 
@@ -473,13 +681,31 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-installation">Documentation - Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-dependencies">Installing dependencies</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-settings-py">Configuring <code class="docutils literal notranslate"><span class="pre">settings.py</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#migrations-and-initial-data">Migrations and initial data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-local-server">Run local server</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tests">Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparation">Preparation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-borgia-while-preserving-the-db">Update Borgia while preserving the DB</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#on-the-machine-where-the-db-is-located">On the machine where the DB is located</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-server">Update the server:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-apache-if-installed">Remove Apache if installed:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-necessary-packages-for-the-rest-of-the-installation">Install necessary packages for the rest of the installation:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-all-necessary-packages">Install all necessary packages:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-the-postgresql-database-and-user">Creating the PostgreSQL Database and User</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-the-db">Import the DB</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-of-yarn">Installation of Yarn</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-borgia-root-folder">Create the Borgia root folder:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-of-borgia">Copy of Borgia</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-python-virtual-environment-for-your-project">Creating a Python Virtual Environment for your Project</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-of-packages-necessary-for-the-application">Installation of packages necessary for the application</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#software-configuration">Software configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#database-migration">Database migration</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ufw-configuration">UFW configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-the-server">Run the server</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

@@ -37,5 +37,6 @@ But no problem if you don't master everything, Borgia is a great learning opport
    install/install_prod
    grafana/install
    bugfixes/db_errors
-   bugfixes/major_updates
+   bugfixes/major_update
+   bugfixes/pgadmin
    

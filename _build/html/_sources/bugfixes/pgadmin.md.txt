@@ -1,0 +1,1 @@
+# PgAdmin4 configuration

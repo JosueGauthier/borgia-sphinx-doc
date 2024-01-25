@@ -8,8 +8,9 @@ User Guide
 Introduction
 ------------
 
-.. image:: images/introduction.png
+.. image:: _static/img/borgia-logo-light.png
     :align: right
+    :width: 100
 
 Welcome to the Borgia User Guide. This documentation will guide you through the steps to use Borgia effectively.
 
@@ -35,9 +36,6 @@ Once the installation is complete, you need to do some initial setup to customiz
 
 Basic Usage
 -----------
-
-.. image:: images/basic_usage.png
-    :align: right
 
 Now that you have installed and configured Borgia, you can start using it to accomplish basic tasks. This section covers essential features and common actions.
 
@@ -80,17 +78,16 @@ If you need more information or additional resources, check out the following li
 Conclusion
 ----------
 
+.. image:: _static/img/borgia-logo-light.png
+    :align: right
+    :width: 100
+
+
 Thank you for following this user guide. You should now be able to use Borgia effectively to meet your needs.
 
 .. note::
     Please do not hesitate to contact us if you have any questions or comments.
 
-.. image:: images/logo.png
-    :align:right
-    :width: 100
 
-.. toctree::
-   :maxdepth: 1
-   :caption: User Guide:
 
    

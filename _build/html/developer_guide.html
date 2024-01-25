@@ -325,7 +325,9 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="install/install_prod.html">Production setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="grafana/install.html">Grafana monitoring</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="bugfixes/db_errors.html">Production setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugfixes/db_errors.html">Database errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugfixes/major_update.html">Major update fixes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugfixes/pgadmin.html">PgAdmin4 configuration</a></li>
 </ul>
 </div>
 </nav></div>
@@ -486,52 +488,36 @@ These documents teach you how to use Borgia as a developer.</p>
 <li class="toctree-l2"><a class="reference internal" href="grafana/install.html#creation-of-the-django-monitoring-panel">Creation of the Django monitoring panel</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="bugfixes/db_errors.html">Production setup</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#documentation-installation">Documentation - Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#first-server-configuration">First server configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#before-starting">Before starting</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#update-the-server">Update the server:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#remove-apache-if-installed">Remove Apache if installed:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#install-necessary-packages-for-the-rest-of-the-installation">Install necessary packages for the rest of the installation:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#install-all-necessary-packages">Install all necessary packages:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#creating-the-postgresql-database-and-user">Creating the PostgreSQL Database and User</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#installation-of-yarn">Installation of Yarn</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#create-the-borgia-root-folder">Create the Borgia root folder:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugfixes/db_errors.html">Database errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugfixes/major_update.html">Major update fixes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bugfixes/major_update.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bugfixes/major_update.html#preparation">Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bugfixes/major_update.html#update-borgia-while-preserving-the-db">Update Borgia while preserving the DB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bugfixes/major_update.html#on-the-machine-where-the-db-is-located">On the machine where the DB is located</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bugfixes/major_update.html#update-the-server">Update the server:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bugfixes/major_update.html#remove-apache-if-installed">Remove Apache if installed:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bugfixes/major_update.html#install-necessary-packages-for-the-rest-of-the-installation">Install necessary packages for the rest of the installation:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bugfixes/major_update.html#install-all-necessary-packages">Install all necessary packages:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bugfixes/major_update.html#creating-the-postgresql-database-and-user">Creating the PostgreSQL Database and User</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bugfixes/major_update.html#import-the-db">Import the DB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bugfixes/major_update.html#installation-of-yarn">Installation of Yarn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bugfixes/major_update.html#create-the-borgia-root-folder">Create the Borgia root folder:</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#copy-of-borgia">Copy of Borgia</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#creating-a-python-virtual-environment-for-your-project">Creating a Python Virtual Environment for your Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bugfixes/major_update.html#copy-of-borgia">Copy of Borgia</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bugfixes/major_update.html#creating-a-python-virtual-environment-for-your-project">Creating a Python Virtual Environment for your Project</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#installation-of-packages-necessary-for-the-application">Installation of packages necessary for the application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#software-configuration">Software configuration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#vital-parameters">Vital parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#database">Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#mail-server">Mail server</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#administrators">Administrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bugfixes/major_update.html#installation-of-packages-necessary-for-the-application">Installation of packages necessary for the application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bugfixes/major_update.html#software-configuration">Software configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bugfixes/major_update.html#database-migration">Database migration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bugfixes/major_update.html#ufw-configuration">UFW configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bugfixes/major_update.html#run-the-server">Run the server</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#database-migration">Database migration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#intermediate-test">Intermediate test</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#ufw-configuration">UFW configuration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#run-the-server">Run the server</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#optionnal-testing-gunicorns-ability-to-serve-the-project">Optionnal : testing Gunicorn’s ability to serve the project</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#deactivate-the-venv">Deactivate the venv</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#creating-systemd-socket-and-service-files-for-gunicorn">Creating systemd Socket and Service Files for Gunicorn</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#checking-for-the-gunicorn-socket-file">Checking for the Gunicorn Socket File</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#testing-socket-activation">Testing Socket Activation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#configure-nginx-to-proxy-pass-to-gunicorn">Configure Nginx to Proxy Pass to Gunicorn</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="bugfixes/db_errors.html#allow-nginx-through-the-ufw-firewall">Allow Nginx through the UFW firewall</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="bugfixes/db_errors.html#save-to-git">Save to git</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="bugfixes/pgadmin.html">PgAdmin4 configuration</a></li>
 </ul>
 </div>
 </section>
