@@ -1,72 +1,37 @@
 # Major update fixes
 
-## Documentation - Installation
-
 ## Introduction
 
-> This part is dedicated to perform a major update of the Borgia app 
+> This part is dedicated to perform a major update of the Borgia app.
 
 This includes : 
 - Django and libs updates
 - Functionnalities addon
-- Mise a jour mettant en jeu les modèles
-- Nouvelles app Django 
+- Template update
+- New Django app 
 
-Ce guide a pour but de vous aidez à vous dépatouiller si une erreur venait à se presenter
-
+This guide is intended to help you sort out any errors that may occur.
 
 ## Preparation 
 
-## Erreur sur les migrations :
+Before attempting any update, make a backup of your VM, container or any other solution hosting your application.
 
-```sh
+## Update Borgia while preserving the DB
 
-find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
-find . -path "*/migrations/*.pyc"  -delete
+If you want to move from one VM to another or start from scratch, you have several options. 
 
+The one I'm going to detail has the advantage of being robust and adaptable to all situations.
 
-```
+> This installation is based solely on a production setup (link)
 
-```bash
+### On the machine where the DB is located
 
-
-(borgiaenv) root@borgia-p3:/borgia-app/Borgia/borgia# python3 manage.py makemigrations modules
-
-    ...
-
-  File "/borgia-app/borgiaenv/lib/python3.9/site-packages/django/db/models/options.py", line 224, in contribute_to_class
-    raise TypeError(
-TypeError: 'class Meta' got invalid attribute(s): ask_password
-
-```
-
-
-```
-
-django.db.migrations.exceptions.InconsistentMigrationHistory: Migration users.0001_initial is applied before its dependency auth.0012_alter_user_first_name_max_length on database 'default'.
-
-```
-
-
-une fois la bdd borgia creer faire : sudo -u postgres psql borgia  < /home/josue/Downloads/backup_P3.sql
-
-
-La methode à suivre si vous souhaitez transvaser votre base de données
-
-## Update Borgia en conservant la BDD
-
-Si vous souhaitez passer d'une VM à une autre ou de repartir sur une base propre vous avez plusieurs options. 
-
-Celle que je vais detailler à l'avantage d'etre robuste et de s'adapter à toutes situations
-
-> Cette installation se base uniquement pour un setup de production (link)
-
-### Sur la machine ou se trouve la BDD
-
->Faire une sauvegarde (un dump) SQL de la BDD 
+>Make an SQL dump of the DB 
 > `pg_dump -h localhost -p 5432 -U mon_utilisateur -d ma_base_de_donnees -f sauvegarde.sql`
 
-### Sur la machine vers laquelle vous souhaitez importer la BDD ou mettre a jour le Borgia
+
+On the machine to which you wish to import the DB or update Borgia
+
 ### Update the server:
 
 - `apt-get update`
@@ -82,7 +47,7 @@ Celle que je vais detailler à l'avantage d'etre robuste et de s'adapter à tout
 
 ### Install all necessary packages:
 
-- `sudo apt install build-essential libssl-dev libffi-dev libjpeg-dev python3-venv python3-dev libpq-dev postgresql postgresql-contrib nginx curl git`
+- `sudo apt install build-essential libssl-dev libffi-dev libjpeg-dev python-venv python-dev libpq-dev postgresql postgresql-contrib nginx curl git`
 
 ### Creating the PostgreSQL Database and User
 
@@ -101,19 +66,16 @@ GRANT ALL PRIVILEGES ON DATABASE borgia TO borgiauser;
 
 ```
 
+### Import the DB
 
-> Dans la BDD vide, importer le dump de la sauvegarde
-> `sudo -u postgres psql borgia  < /home/josue/Downloads/backup_P3.sql`
+In the empty DB, import the backup dump : 
+
+`sudo -u postgres psql borgia < /home/josue/Downloads/backup_P3.sql`
 
 
 ### Installation of Yarn 
 
-Explicit case of Debian, otherwise see [here](https://yarnpkg.com/lang/en/docs/install/)
-
-- `curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -`
-- `echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list`
-- `apt-get update && sudo apt-get install yarn`
-
+See (link)
 
 ### Create the Borgia root folder:
 
@@ -133,7 +95,7 @@ Then in `/borgia-app/Borgia`:
 
 ### Creating a Python Virtual Environment for your Project
 
-- `python3 -m venv venv`
+- `python -m venv venv`
 - `source venv/bin/activate`
 
 ## Installation of packages necessary for the application
@@ -146,66 +108,84 @@ And finally, outside the virtual environment:
 
 - `yarn global add less`
 
-> Si erreur  `lessc` : `npm install -g less`
+> If error  `lessc` : `npm install -g less`
 
 
 ## Software configuration
 
-### Vital parameters
-
-Copy the file `/borgia-app/Borgia/contrib/production/settings.py` to `/borgia-app/Borgia/borgia/borgia/settings.py` and:
-
-- Modify the `SECRET_KEY =` line by indicating a random private key. For example, [this site](https://randomkeygen.com/) allows you to generate keys, choose at least "CodeIgniter Encryption Keys", for example: `SECRET_KEY = 'AAHHBxi0qHiVWWk6J1bVWCMdF45p6X9t'`.
-
-- Make sure `DEBUG = False`.
-
-- Modify the `ALLOWED_HOSTS =` line by indicating the domains or subdomains accepted by the application. For example: `ALLOWED_HOSTS = ['sibers.borgia-app.com', 'borgia-me.ueam.net']`.
-
-
-### Database
-
-In the `/borgia-app/Borgia/borgia/borgia/settings.py` file, modify the part:
-
-```python
-DATABASES = {
-...
-}
-```
-
-by indicating the name of the database, the user name and the password defined during the configuration of the latter. For example :
-
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'borgia',
-        'USER': 'borgiauser',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-```
-
-### Mail server
-
-
-Voir (link)
-
-### Administrators
-
-
-Voir (link)
-
+See (link)
 
 ## Database migration
 
+This is where your problems are likely to start. 
+
+Here's the kind of error you may encounter:
+
+```sh
+(borgiaenv) root@borgia-p3:/borgia-app/Borgia/borgia# python manage.py makemigrations modules
+
+...
+
+  File "/borgia-app/borgiaenv/lib/python.9/site-packages/django/db/models/options.py", line 224, in contribute_to_class
+    raise TypeError(
+TypeError: 'class Meta' got invalid attribute(s): ask_password
+...
+```
+
+```sh
+...
+django.db.migrations.exceptions.InconsistentMigrationHistory: Migration users.0001_initial is applied before its dependency auth.0012_alter_user_first_name_max_length on database 'default'.
+```
+
+
+First of all, try a classic migration:
+
+
 In `/borgia-app/Borgia/borgia` and in the virtual environment:
 
-- `python3 manage.py makemigrations configurations users shops finances events modules sales stocks`
-- `python3 manage.py migrate`
-- `python3 manage.py loaddata initial`
-- `python3 manage.py collectstatic --clear` by accepting the alert
+- `python manage.py makemigrations configurations users shops finances events modules sales stocks`
+- `python manage.py migrate`
+- `python manage.py collectstatic --clear` by accepting the alert
+
+
+If you get an error, it means that a link has been broken between your DB and your Django. You'll need to repair it.
+
+
+Firstly, in the `/borgia-app/Borgia/borgia` delete all the current migrations files :
+
+
+```sh
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete
+
+```
+
+Then inside the PostgreSQL database you will delete the Django migrations too.
+
+```sh
+
+python manage.py dbshell
+
+borgia=> DELETE FROM django_migrations;
+
+```
+
+Then you will retry to build the migrations : 
+In `/borgia-app/Borgia/borgia` and in the virtual environment:
+
+- `python manage.py makemigrations configurations users shops finances events modules sales stocks`
+- `python manage.py migrate`
+
+If you still get an error you need to fake at least initial migrations [Django fake migrations](https://docs.djangoproject.com/fr/5.0/topics/migrations/#initial-migrations). 
+
+
+- `python manage.py migrate --fake-initial`
+
+If after this you still get an error fake the corresponding app with the `--fake` attribute. For example here if you get an error with the `contenttypes` app do :
+
+- `python manage.py migrate contenttypes --fake`
+
+> Be careful with this command beacause after that you will need to redo the migrations from scratch.
 
 Then, enter the password for the administrator account (which will be deactivated later):
 
@@ -219,7 +199,8 @@ Changing the password of the first user `AE_ENSAM`:
 - `exit()`
 
 
-## Intermediate test
+After all these commands you will be able to run a server : 
+
 
 ### UFW configuration
 
@@ -236,89 +217,92 @@ The command in the virtual environment `python3 manage.py runserver 0.0.0.0:8000
 In your web browser, visit your server’s domain name or IP address followed by port 8000 : http://server_domain_or_IP:8000 
 
 
+If everythings go well you can normally continue the installation.
+Else if you get an error like : 
 
-
-A tester : faire la maj en place cad juste update les fichiers django
-
-
-
-## Cas pratique 
-
-## Autre erreurs rencontrées
-
-
-
-SI erreur lessc : npm install -g less
-
-
-
-
----
-
-
-
-
-This guide allows you to install, configure and operate Borgia locally for **development**.
-
-All of the following is independent of the operating system used. It works on Windows, MacOS and Linux.
-
-Be careful, if Python 2 and 3 coexist, python 3 will be called with `python3`. In all cases, check that Python 3 is used for the following commands, by doing: `python --version` or `python3 --version`. Same for `pip` and `pip3` if necessary.
-
-## Installing dependencies
-
-- Python packages: `pip install -r requirements/dev.txt`
-- Less: `yarn global add less` or `npm install -g less`
-
-## Configuring `settings.py`
-
-- Copy/paste the `settings.py` file located in `/contrib/development` into `/borgia/borgia`
-- Optional : Modify all the variables that must be done by browsing the file.
-- Optional : In the case of configuring a Gmail email, with email `GMAIL_EMAIL` and password `GMAIL_PASSWORD`, use:
-```python
-DEFAULT_FROM_EMAIL = 'GMAIL_EMAIL'
-SERVER_EMAIL = 'GMAIL_EMAIL'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'GMAIL_EMAIL'
-EMAIL_HOST_PASSWORD = 'GMAIL_PASSWORD'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 ```
-- Optional: Don't forget to configure Gmail to accept "less secure applications".
-  
-## Migrations and initial data
+django.db.utils.ProgrammingError: column shops_shop.correcting_factor_activated does not exist
+LINE 1: ..."shops_shop"."description", "shops_shop"."color", "shops_sho...
 
-The following commands must be executed in the `/borgia` application folder.
+```
 
-- `python manage.py makemigrations configurations users shops finances events modules sales stocks`
+It means that due to fake migrations the corresponding fields does not exist in the DB so you need to make a fix migration by hand.
+
+To do this indificate the corresponding fields that have a problem, in the given example it is : `correcting_factor_activated` from `shops` app. 
+
+So in the shops migration folder, go to the file that create the `correcting_factor_activated` field and remove it. 
+
+
+```py
+
+# Generated by Django 4.0.4 on 2024-01-22 21:08
+
+from decimal import Decimal
+import django.core.validators
+from django.db import migrations, models
+import django.db.models.deletion
+
+
+class Migration(migrations.Migration):
+
+    initial = True
+
+    dependencies = [
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='Shop',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(max_length=255, validators=[django.core.validators.RegexValidator(message='Ne doit contenir que des lettres\n                                minuscules, sans espace ni caractère\n                                spécial.', regex='^[a-z]+$')], verbose_name='Code')),
+                ('description', models.TextField(verbose_name='Description')),
+                ('color', models.CharField(max_length=255, validators=[django.core.validators.RegexValidator(message='Doit être dans le format #F4FA58', regex='^#[A-Za-z0-9]{6}')], verbose_name='Couleur')),
+                #('correcting_factor_activated', models.BooleanField(default=True, verbose_name='Activation du facteur de correction')),
+            ],
+        ),
+
+
+...
+
+```
+
+
+Then create a new file inside the migration folder like `0002_FIX_correcting_factor_activated.py` and inside put the following content : 
+
+```py
+
+
+
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+
+
+    dependencies = [
+        ('shops', '0001_initial'),
+    ]
+
+    operations = [
+        migrations.AddField(  
+            model_name='Shop',
+            name='correcting_factor_activated',
+            field=models.BooleanField(default=True, verbose_name='Activation du facteur de correction'),
+        ),
+       
+    ]
+
+
+```
+What it does ? It does basically add a field inside the Shop model.
+
+After that do again :
+
+- `python manage.py makemigrations`
 - `python manage.py migrate`
-- `python manage.py loaddata initial`
-- `python manage.py collectstatic --clear` indicating "yes" on validation.
 
-Initial data for simulation and development.
 
-- `python manage.py loaddata tests_data`
+And repeat for each missing field. 
 
-Changing the password of the first user `AE_ENSAM`:
-
-- `python manage.py shell`
-- `from users.models import User`
-- `u = User.objects.get(pk=1)`
-- `u.set_password("NEW_PASSWORD")`
-- `u.save()`
-- `exit()`
-
-## Run local server
-
-You can then launch a local development server:
-
-- `python manage.py runserver`
-
-To launch it on a specific port address use:
-
-- `python manage.py runserver localhost:8081`
-
-## Tests
-
-Unit tests are run by `python manage.py test` or `python manage.py test APPLICATION_NAME` to test a particular application.
-
-They must be executed, without errors before each push.
+After that, you should be able to run a Django server.
